@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import {
   accounts,
   cards,
@@ -38,6 +39,9 @@ export default function Page() {
             Track balances across accounts, monitor spending, and keep your cards safe - all in a sleek, unified
             experience.
           </p>
+          <Link href="/accounts" className="mt-5 inline-flex items-center gap-2 text-sm text-primary">
+            Explore accounts hub <ChevronRight size={16} />
+          </Link>
         </div>
         <div className="flex items-center gap-3 text-sm text-zinc-400">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-card/70 text-zinc-300">
@@ -223,3 +227,4 @@ function StatBlock({
     </div>
   );
 }
+
