@@ -1,0 +1,3 @@
+import './nativewind.css';
+
+export {};
