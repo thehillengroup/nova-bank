@@ -1,9 +1,5 @@
 import Link from 'next/link';
-
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+import { formatCurrency } from '../../lib/currency';
 
 const upcomingPayments = [
   {
@@ -133,7 +129,7 @@ function UpcomingPayments() {
             </div>
             <div className="text-right">
               <p className="text-sm text-zinc-500">Due {new Date(payment.dueDate).toLocaleDateString()}</p>
-              <p className="text-lg font-semibold text-white">{currency.format(payment.amount)}</p>
+              <p className="text-lg font-semibold text-white">{formatCurrency(payment.amount)}</p>
             </div>
             <span className="inline-flex rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-zinc-400">
               {payment.status}
@@ -171,7 +167,7 @@ function TransfersPanel() {
             <p className="mt-1 text-sm text-zinc-500">
               {transfer.source} <span aria-hidden="true">&rarr;</span> {transfer.destination}
             </p>
-            <p className="mt-4 text-2xl font-semibold text-white">{currency.format(transfer.amount)}</p>
+            <p className="mt-4 text-2xl font-semibold text-white">{formatCurrency(transfer.amount)}</p>
           </article>
         ))}
       </div>

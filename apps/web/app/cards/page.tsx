@@ -1,11 +1,7 @@
 import Link from 'next/link';
 
 import { cards, recentTransactions } from '@repo/mock-data';
-
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+import { formatCurrency } from '../../lib/currency';
 
 const controls = [
   {
@@ -108,11 +104,11 @@ function ActiveCards() {
           >
             <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-zinc-500">
               <span>{card.brand}</span>
-              <span>{card.last4}</span>
+              <span>**** {card.last4}</span>
             </div>
             <h3 className="mt-3 text-lg font-semibold text-white">{card.label}</h3>
-            <p className="mt-2 text-sm text-zinc-500">Limit {currency.format(card.creditLimit)}</p>
-            <p className="mt-4 text-3xl font-semibold text-white">{currency.format(card.balance)}</p>
+            <p className="mt-2 text-sm text-zinc-500">Limit {formatCurrency(card.creditLimit)}</p>
+            <p className="mt-4 text-3xl font-semibold text-white">{formatCurrency(card.balance)}</p>
             <div className="mt-4 flex gap-2">
               <button className="inline-flex flex-1 items-center justify-center rounded-full border border-white/10 px-3 py-2 text-xs font-medium text-white hover:border-primary/40">
                 View controls
@@ -181,7 +177,7 @@ function SpendOverview({
           <div key={item.id} className="flex items-center justify-between text-sm">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">{item.label}</p>
-              <p className="mt-1 text-xl font-semibold text-white">{currency.format(item.amount)}</p>
+              <p className="mt-1 text-xl font-semibold text-white">{formatCurrency(item.amount)}</p>
             </div>
             <p
               className={`${item.direction === 'up' ? 'text-success' : 'text-red-400'} text-xs uppercase tracking-[0.3em]`}
@@ -222,7 +218,7 @@ function RecentCardActivity({
             <p
               className={`${transaction.direction === 'credit' ? 'text-success' : 'text-red-400'} text-base font-semibold`}
             >
-              {currency.format(transaction.amount)}
+              {formatCurrency(transaction.amount)}
             </p>
           </div>
         ))}

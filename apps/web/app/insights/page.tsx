@@ -1,11 +1,9 @@
 import Link from 'next/link';
 
 import { accounts, primarySnapshot, recentTransactions, spendingByCategory } from '@repo/mock-data';
+import { formatCurrency } from '../../lib/currency';
 
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: primarySnapshot.currency,
-});
+const formatPrimaryCurrency = (value: number) => formatCurrency(value, { currency: primarySnapshot.currency });
 
 const goals = [
   {
@@ -102,7 +100,7 @@ function FinancialPulse({ totalDeposits }: { totalDeposits: number }) {
         </div>
         <div className="rounded-3xl border border-white/10 bg-cardMuted/40 px-5 py-3 text-right">
           <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">Liquid reserves</p>
-          <p className="mt-1 text-2xl font-semibold text-white">{currency.format(totalDeposits)}</p>
+          <p className="mt-1 text-2xl font-semibold text-white">{formatPrimaryCurrency(totalDeposits)}</p>
         </div>
       </div>
 
@@ -113,7 +111,7 @@ function FinancialPulse({ totalDeposits }: { totalDeposits: number }) {
             className="rounded-3xl border border-white/5 bg-cardMuted/60 p-4 text-sm text-zinc-300"
           >
             <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">{trend.label}</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{currency.format(trend.value)}</p>
+            <p className="mt-2 text-2xl font-semibold text-white">{formatPrimaryCurrency(trend.value)}</p>
             <p className="mt-1 text-xs text-zinc-500">{trend.descriptor}</p>
             <p
               className={`${trend.direction === 'up' ? 'text-success' : 'text-red-400'} mt-4 text-xs uppercase tracking-[0.3em]`}
@@ -150,7 +148,7 @@ function CategoryBreakdown() {
                   <p className="text-base font-semibold text-white">{category.label}</p>
                   <p className="text-xs text-zinc-500">{category.percentage}% of monthly spending</p>
                 </div>
-                <p className="text-lg font-semibold text-white">{currency.format(category.amount)}</p>
+                <p className="text-lg font-semibold text-white">{formatPrimaryCurrency(category.amount)}</p>
               </div>
               <div className="h-2 rounded-full bg-white/5">
                 <div
@@ -194,8 +192,8 @@ function GoalProgress() {
                 <div className="h-full rounded-full bg-success" style={{ width: `${completion}%` }} />
               </div>
               <div className="mt-3 flex justify-between text-xs text-zinc-400">
-                <span>{currency.format(goal.progress)}</span>
-                <span>{currency.format(goal.target)}</span>
+                <span>{formatPrimaryCurrency(goal.progress)}</span>
+                <span>{formatPrimaryCurrency(goal.target)}</span>
               </div>
             </article>
           );
@@ -233,7 +231,7 @@ function TopActivity({
             <p
               className={`${transaction.direction === 'credit' ? 'text-success' : 'text-red-400'} text-base font-semibold`}
             >
-              {currency.format(transaction.amount)}
+              {formatPrimaryCurrency(transaction.amount)}
             </p>
           </div>
         ))}
