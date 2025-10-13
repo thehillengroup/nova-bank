@@ -59,6 +59,13 @@ function InnerApp() {
   }
 
   const formatAmount = (value: number) => formatCurrency(value, currencyFormatter);
+  const featuredCard = cards[0];
+  const topCategories = spendingByCategory.slice(0, 5);
+  const recentCardTransactions = recentTransactions.slice(0, 6);
+  const hasMoreCategories = spendingByCategory.length > topCategories.length;
+  const remainingCategoryCount = Math.max(spendingByCategory.length - topCategories.length, 0);
+  const hasMoreTransactions = recentTransactions.length > recentCardTransactions.length;
+  const remainingTransactionCount = Math.max(recentTransactions.length - recentCardTransactions.length, 0);
 
   return (
     <LinearGradient colors={['#0b0b1d', '#05050f']} className="flex-1">
@@ -76,18 +83,18 @@ function InnerApp() {
               <View className="flex-row items-start justify-between">
                 <View>
                   <Text className="text-xs uppercase tracking-[4px] text-zinc-400">Primary balance</Text>
-                  <Text className="mt-3 text-4xl font-semibold text-white">{formatAmount(cards[0]?.balance ?? 0)}</Text>
+                  <Text className="mt-3 text-4xl font-semibold text-white">{featuredCard ? formatAmount(featuredCard.balance) : formatAmount(0)}</Text>
                 </View>
                 <View className="items-end">
-                  <Text className="text-sm font-medium text-white">{cards[0]?.label}</Text>
-                  <Text className="mt-1 text-xs text-zinc-400">**** {cards[0]?.last4}</Text>
+                  <Text className="text-sm font-medium text-white">{featuredCard?.label ?? '-'}</Text>
+                  <Text className="mt-1 text-xs text-zinc-400">{featuredCard ? `**** ${featuredCard.last4}` : 'No primary card'}</Text>
                 </View>
               </View>
               <View className="mt-8 flex-row items-center justify-between">
                 <View>
                   <Text className="text-xs uppercase tracking-[4px] text-zinc-500">Available credit</Text>
                   <Text className="mt-2 text-base font-medium text-white">
-                    {formatAmount((cards[0]?.creditLimit ?? 0) - Math.abs(cards[0]?.balance ?? 0))}
+                    {featuredCard ? formatAmount(featuredCard.creditLimit - Math.abs(featuredCard.balance)) : formatAmount(0)}
                   </Text>
                 </View>
                 <View className="flex-row items-center gap-2 rounded-full bg-white/10 px-4 py-2">
@@ -123,19 +130,27 @@ function InnerApp() {
               </View>
 
               <View className="mt-5 space-y-3">
-                {spendingByCategory.map((category) => (
+                {topCategories.map((category) => (
                   <SpendingCategoryRow key={category.id} category={category} formatAmount={formatAmount} />
                 ))}
+                {hasMoreCategories ? (
+                  <Text className="text-[11px] text-zinc-500">
+                    +{remainingCategoryCount} more categories tracked
+                  </Text>
+                ) : null}
               </View>
             </View>
 
             <View className="rounded-3xl border border-white/5 bg-card p-5">
               <View className="flex-row items-center justify-between">
                 <Text className="text-base font-semibold text-white">Recent transactions</Text>
-                <Text className="text-xs text-primary">View all</Text>
+                <Text className="text-xs text-primary">
+                  View all
+                  {hasMoreTransactions ? ` (${recentTransactions.length})` : ''}
+                </Text>
               </View>
               <View className="mt-4 space-y-3">
-                {recentTransactions.map((transaction) => (
+                {recentCardTransactions.map((transaction) => (
                   <TransactionRow
                     key={transaction.id}
                     transaction={transaction}
@@ -146,6 +161,11 @@ function InnerApp() {
                     )}
                   />
                 ))}
+                {hasMoreTransactions ? (
+                  <Text className="text-[11px] text-zinc-500">
+                    +{remainingTransactionCount} more transactions available
+                  </Text>
+                ) : null}
               </View>
             </View>
 

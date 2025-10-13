@@ -24,15 +24,16 @@ export function Navigation() {
   const buttonLabel = isOpen ? 'Close navigation menu' : 'Open navigation menu';
 
   return (
-    <nav className="w-full text-sm md:w-auto">
+    <nav className="w-full text-sm md:w-auto" aria-label="Primary navigation">
       <div className="flex items-center justify-between gap-3 md:hidden">
         <span className="text-xs uppercase tracking-[0.3em] text-zinc-500">Explore</span>
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white transition hover:border-primary/40 hover:text-primary"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white transition hover:border-primary/40 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           aria-expanded={isOpen}
           aria-controls="primary-navigation"
+          aria-pressed={isOpen}
           aria-label={buttonLabel}
         >
           <span className="relative block h-4 w-5">
@@ -67,7 +68,12 @@ export function Navigation() {
             : 'text-zinc-400 hover:bg-white/5 hover:text-white';
 
           return (
-            <Link key={href} href={href} className={`${baseClasses} ${stateClasses}`}>
+            <Link
+              key={href}
+              href={href}
+              className={`${baseClasses} ${stateClasses}`}
+              aria-current={isActive ? 'page' : undefined}
+            >
               {label}
             </Link>
           );

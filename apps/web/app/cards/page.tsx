@@ -1,7 +1,6 @@
-import Link from 'next/link';
-
 import { cards, recentTransactions } from '@repo/mock-data';
-import { formatCurrency } from '../../lib/currency';
+
+import { ActiveCards, ControlCenter, RecentCardActivity, SpendOverview, type ControlDefinition, type SpendInsight } from '../../components/cards';
 
 const controls = [
   {
@@ -19,7 +18,7 @@ const controls = [
     label: 'Spend alerts',
     description: 'Push notifications when transactions exceed thresholds you define.',
   },
-];
+] satisfies ControlDefinition[];
 
 const spendInsights = [
   {
@@ -27,23 +26,23 @@ const spendInsights = [
     label: 'This week',
     amount: 486.42,
     change: 8.2,
-    direction: 'down' as const,
+    direction: 'down',
   },
   {
     id: 'month',
     label: 'This month',
     amount: 2140.33,
     change: 12.5,
-    direction: 'up' as const,
+    direction: 'up',
   },
   {
     id: 'quarter',
     label: 'Rolling 90d',
     amount: 6124.88,
     change: 3.1,
-    direction: 'up' as const,
+    direction: 'up',
   },
-];
+] satisfies SpendInsight[];
 
 export default function CardsPage() {
   const lastFiveTransactions = recentTransactions.slice(0, 5);
@@ -71,8 +70,8 @@ export default function CardsPage() {
 
       <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-6">
-          <ActiveCards />
-          <ControlCenter />
+          <ActiveCards cards={cards} />
+          <ControlCenter controls={controls} />
         </div>
         <aside className="space-y-6">
           <SpendOverview insights={spendInsights} />
@@ -83,146 +82,3 @@ export default function CardsPage() {
   );
 }
 
-function ActiveCards() {
-  return (
-    <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">Active cards</h2>
-        <Link href="#" className="text-sm text-primary">
-          Manage credentials
-        </Link>
-      </div>
-      <p className="mt-2 text-sm text-zinc-500">
-        Manage spend limits, cardholder details, and statement preferences across your portfolio.
-      </p>
-
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        {cards.map((card) => (
-          <article
-            key={card.id}
-            className="rounded-3xl border border-white/5 bg-cardMuted/60 p-5 shadow-innerGlow transition hover:border-primary/40 hover:shadow-glass"
-          >
-            <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-zinc-500">
-              <span>{card.brand}</span>
-              <span>**** {card.last4}</span>
-            </div>
-            <h3 className="mt-3 text-lg font-semibold text-white">{card.label}</h3>
-            <p className="mt-2 text-sm text-zinc-500">Limit {formatCurrency(card.creditLimit)}</p>
-            <p className="mt-4 text-3xl font-semibold text-white">{formatCurrency(card.balance)}</p>
-            <div className="mt-4 flex gap-2">
-              <button className="inline-flex flex-1 items-center justify-center rounded-full border border-white/10 px-3 py-2 text-xs font-medium text-white hover:border-primary/40">
-                View controls
-              </button>
-              <button className="inline-flex flex-1 items-center justify-center rounded-full bg-primary/80 px-3 py-2 text-xs font-medium text-white hover:bg-primary">
-                Statements
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ControlCenter() {
-  return (
-    <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">Control center</h2>
-        <Link href="#" className="text-sm text-primary">
-          Configure defaults
-        </Link>
-      </div>
-      <p className="mt-2 text-sm text-zinc-500">
-        Apply controls instantly to any card or cardholder group. Templates keep teams compliant.
-      </p>
-
-      <div className="mt-5 grid gap-4 md:grid-cols-3">
-        {controls.map((control) => (
-          <article
-            key={control.id}
-            className="rounded-3xl border border-white/5 bg-white/5 p-4 text-sm text-zinc-300"
-          >
-            <h3 className="text-base font-semibold text-white">{control.label}</h3>
-            <p className="mt-2 text-xs text-zinc-500">{control.description}</p>
-            <button className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-primary">
-              Adjust
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function SpendOverview({
-  insights,
-}: {
-  insights: {
-    id: string;
-    label: string;
-    amount: number;
-    change: number;
-    direction: 'up' | 'down';
-  }[];
-}) {
-  return (
-    <section className="rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/20 via-primary/5 to-card p-6 shadow-glass">
-      <h2 className="text-lg font-semibold text-white">Spend insights</h2>
-      <p className="mt-2 text-sm text-zinc-400">Monitor directional changes and anticipate when to dial limits up or down.</p>
-
-      <div className="mt-5 space-y-4">
-        {insights.map((item) => (
-          <div key={item.id} className="flex items-center justify-between text-sm">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">{item.label}</p>
-              <p className="mt-1 text-xl font-semibold text-white">{formatCurrency(item.amount)}</p>
-            </div>
-            <p
-              className={`${item.direction === 'up' ? 'text-success' : 'text-red-400'} text-xs uppercase tracking-[0.3em]`}
-            >
-              {item.direction === 'up' ? '+' : '-'}{item.change}%
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function RecentCardActivity({
-  transactions,
-}: {
-  transactions: typeof recentTransactions;
-}) {
-  return (
-    <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white">Recent card activity</h2>
-        <Link href="#" className="text-sm text-primary">
-          View all
-        </Link>
-      </div>
-
-      <div className="mt-4 space-y-3">
-        {transactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3 text-sm text-zinc-300"
-          >
-            <div>
-              <p className="font-medium text-white">{transaction.description}</p>
-              <p className="text-xs text-zinc-500">{new Date(transaction.date).toLocaleDateString()}</p>
-            </div>
-            <p
-              className={`${transaction.direction === 'credit' ? 'text-success' : 'text-red-400'} text-base font-semibold`}
-            >
-              {formatCurrency(transaction.amount)}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}

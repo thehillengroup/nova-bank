@@ -1,9 +1,9 @@
 import { Account, CardSummary, FinancialSnapshot, SpendingCategory, Transaction } from './types';
 
 export const primarySnapshot: FinancialSnapshot = {
-  totalBalance: 12460.54,
-  incomeThisMonth: 8420.12,
-  spendingThisMonth: 3260.34,
+  totalBalance: 49880.33,
+  incomeThisMonth: 18240.58,
+  spendingThisMonth: 9680.41,
   currency: 'USD'
 };
 
@@ -31,6 +31,22 @@ export const accounts: Account[] = [
     balance: -640.75,
     currency: 'USD',
     accountNumber: '***7721'
+  },
+  {
+    id: 'acc-004',
+    name: 'Global Treasury Checking',
+    type: 'checking',
+    balance: 24150.67,
+    currency: 'USD',
+    accountNumber: '***2150'
+  },
+  {
+    id: 'acc-005',
+    name: 'Venture Reserve Savings',
+    type: 'savings',
+    balance: 15890.12,
+    currency: 'USD',
+    accountNumber: '***8891'
   }
 ];
 
@@ -52,6 +68,33 @@ export const cards: CardSummary[] = [
     balance: 824.21,
     creditLimit: 8000,
     accentColor: '#ec4899'
+  },
+  {
+    id: 'card-003',
+    label: 'Corporate Purchasing',
+    brand: 'mastercard',
+    last4: '4431',
+    balance: 1458.11,
+    creditLimit: 12000,
+    accentColor: '#22d3ee'
+  },
+  {
+    id: 'card-004',
+    label: 'Field Operations Debit',
+    brand: 'visa',
+    last4: '0074',
+    balance: 248.94,
+    creditLimit: 2500,
+    accentColor: '#f97316'
+  },
+  {
+    id: 'card-005',
+    label: 'Supplier Rewards',
+    brand: 'discover',
+    last4: '5520',
+    balance: 678.42,
+    creditLimit: 6000,
+    accentColor: '#10b981'
   }
 ];
 
@@ -59,34 +102,108 @@ export const spendingByCategory: SpendingCategory[] = [
   {
     id: 'cat-001',
     label: 'Essentials',
-    amount: 1244.02,
-    percentage: 42,
+    amount: 1344.82,
+    percentage: 34,
     trend: 'down'
   },
   {
     id: 'cat-002',
     label: 'Leisure',
-    amount: 686.11,
-    percentage: 23,
+    amount: 918.66,
+    percentage: 21,
     trend: 'up'
   },
   {
     id: 'cat-003',
     label: 'Transfers',
-    amount: 412.09,
-    percentage: 14,
+    amount: 512.09,
+    percentage: 16,
     trend: 'down'
   },
   {
     id: 'cat-004',
     label: 'Investments',
-    amount: 290.12,
+    amount: 410.12,
+    percentage: 11,
+    trend: 'up'
+  },
+  {
+    id: 'cat-005',
+    label: 'Operations',
+    amount: 351.87,
     percentage: 10,
+    trend: 'up'
+  },
+  {
+    id: 'cat-006',
+    label: 'Travel & Events',
+    amount: 268.44,
+    percentage: 8,
     trend: 'up'
   }
 ];
 
 export const recentTransactions: Transaction[] = [
+  {
+    id: 'tx-010',
+    description: 'Stripe Settlement',
+    merchant: 'Stripe',
+    category: 'Incoming payments',
+    amount: 4100.72,
+    currency: 'USD',
+    date: '2025-09-21',
+    direction: 'credit'
+  },
+  {
+    id: 'tx-009',
+    description: 'Boulder Workspace Rent',
+    merchant: 'Flatiron Properties',
+    category: 'Facilities',
+    amount: -2650,
+    currency: 'USD',
+    date: '2025-09-20',
+    direction: 'debit'
+  },
+  {
+    id: 'tx-008',
+    description: 'Team Offsite Deposit',
+    merchant: 'Aspen Lodge',
+    category: 'Travel',
+    amount: -1023.5,
+    currency: 'USD',
+    date: '2025-09-19',
+    direction: 'debit'
+  },
+  {
+    id: 'tx-007',
+    description: 'Figma Subscription',
+    merchant: 'Figma',
+    category: 'Software',
+    amount: -54,
+    currency: 'USD',
+    date: '2025-09-19',
+    direction: 'debit'
+  },
+  {
+    id: 'tx-006',
+    description: 'Expense Reimbursement - Product Team',
+    merchant: 'Nova Bank',
+    category: 'Reimbursements',
+    amount: 214.22,
+    currency: 'USD',
+    date: '2025-09-18',
+    direction: 'credit'
+  },
+  {
+    id: 'tx-005',
+    description: 'AWS Marketplace',
+    merchant: 'Amazon Web Services',
+    category: 'Cloud infrastructure',
+    amount: -482.9,
+    currency: 'USD',
+    date: '2025-09-18',
+    direction: 'debit'
+  },
   {
     id: 'tx-001',
     description: 'Whole Foods Market',
@@ -112,7 +229,7 @@ export const recentTransactions: Transaction[] = [
     description: 'Paycheck - Acme Corp',
     merchant: 'Acme Corp',
     category: 'Income',
-    amount: 3250.0,
+    amount: 3250,
     currency: 'USD',
     date: '2025-09-15',
     direction: 'credit'
@@ -128,4 +245,3 @@ export const recentTransactions: Transaction[] = [
     direction: 'debit'
   }
 ];
-
