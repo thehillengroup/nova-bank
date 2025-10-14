@@ -132,7 +132,7 @@ function CategoryBreakdown() {
     <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-white">Category breakdown</h2>
-        <Link href="#" className="text-sm text-primary">
+        <Link href="/insights/categories" className="text-sm text-primary">
           Refine categories
         </Link>
       </div>
@@ -172,7 +172,7 @@ function GoalProgress() {
     <section className="rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/20 via-primary/5 to-card p-6 shadow-glass">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-white">Goals tracker</h2>
-        <Link href="#" className="text-sm text-white/80 hover:text-white">
+        <Link href="/insights/goals" className="text-sm text-white/80 hover:text-white">
           Adjust cadence
         </Link>
       </div>
@@ -212,7 +212,7 @@ function TopActivity({
     <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-white">Signal boost</h2>
-        <Link href="#" className="text-sm text-primary">
+        <Link href="/insights/ledger" className="text-sm text-primary">
           View ledger
         </Link>
       </div>

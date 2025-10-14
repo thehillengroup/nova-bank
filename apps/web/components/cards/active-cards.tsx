@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 
 import { formatCurrency } from '../../lib/currency';
 import type { ActiveCardsProps } from './types';
@@ -8,7 +8,7 @@ export function ActiveCards({ cards }: ActiveCardsProps) {
     <section className="rounded-3xl border border-white/5 bg-card p-6 shadow-innerGlow">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-white">Active cards</h2>
-        <Link href="#" className="text-sm text-primary" aria-label="Manage card credentials">
+        <Link href="/cards/credentials" className="text-sm text-primary" aria-label="Manage card credentials hub">
           Manage credentials
         </Link>
       </div>
@@ -30,21 +30,35 @@ export function ActiveCards({ cards }: ActiveCardsProps) {
             <h3 className="mt-3 text-lg font-semibold text-white">{card.label}</h3>
             <p className="mt-2 text-sm text-zinc-500">Limit {formatCurrency(card.creditLimit)}</p>
             <p className="mt-4 text-3xl font-semibold text-white">{formatCurrency(card.balance)}</p>
-            <div className="mt-4 flex gap-2">
-              <button
-                type="button"
-                className="inline-flex flex-1 items-center justify-center rounded-full border border-white/10 px-3 py-2 text-xs font-medium text-white transition hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                href={`/cards/${card.id}/controls`}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center rounded-full border border-white/10 px-3 py-2 text-xs font-medium text-white transition hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 aria-label={`View controls for ${card.label}`}
               >
                 View controls
-              </button>
-              <button
-                type="button"
-                className="inline-flex flex-1 items-center justify-center rounded-full bg-primary/80 px-3 py-2 text-xs font-medium text-white transition hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              </Link>
+              <Link
+                href={`/cards/${card.id}/statements`}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center rounded-full bg-primary/80 px-3 py-2 text-xs font-medium text-white transition hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 aria-label={`View statements for ${card.label}`}
               >
                 Statements
-              </button>
+              </Link>
+              <Link
+                href={`/cards/${card.id}/issue`}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center rounded-full border border-primary/40 px-3 py-2 text-xs font-medium text-primary transition hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                aria-label={`Issue virtual card for ${card.label}`}
+              >
+                Issue virtual card
+              </Link>
+              <Link
+                href={`/cards/${card.id}/credentials`}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center rounded-full border border-white/10 px-3 py-2 text-xs font-medium text-white transition hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                aria-label={`Manage credentials for ${card.label}`}
+              >
+                Manage credentials
+              </Link>
             </div>
           </article>
         ))}

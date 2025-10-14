@@ -1,4 +1,4 @@
-export interface Account {
+﻿export interface Account {
   id: string;
   name: string;
   type: 'checking' | 'savings' | 'credit';
@@ -34,6 +34,7 @@ export interface Transaction {
   currency: string;
   date: string;
   direction: 'debit' | 'credit';
+  cardId?: string;
 }
 
 export interface FinancialSnapshot {
@@ -42,4 +43,6 @@ export interface FinancialSnapshot {
   spendingThisMonth: number;
   currency: string;
 }
+
+
 
